@@ -1,6 +1,7 @@
-@import "tailwindcss";
-@import "tw-animate-css";
-@import "shadcn/tailwind.css";
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+@plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -116,14 +117,60 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+@theme {
+  /* colors */
+  --color-brand-white: #f7ede2;
+  --color-brand-yellow: #f6bd60;
+  --color-brand-pink-100: #f5cac3;
+  --color-brand-pink-200: #f28482;
+  --color-brand-blue: #84a59d;
+  --color-brand-black: #252525;
+
+  /* typography */
+  /* font families */
+  --font-caveat: var(--font-caveat);
+  --font-playfair: var(--font-playfair);
+  --font-nunito: var(--font-nunito);
+
+  /* font sizes */
+  --text-fs-900: 4.5rem;
+  --text-fs-800: 3.75rem;
+  --text-fs-700: 2.5rem;
+  --text-fs-600: 1.75rem;
+  --text-fs-500: 1.25rem;
+  --text-fs-400: 1rem;
+  --text-fs-300: 0.75rem;
+  --text-fs-200: 0.5rem;
+
+  /* breakpoint */
+  --breakpoint-lg: 1000px;
+  --breakpoint-md: 750px;
+}
+
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
+  html {
+    @apply scroll-smooth;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-brand-white text-brand-black overflow-x-hidden leading-normal tracking-normal text-fs-400;
   }
-  html {
-    @apply font-sans;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply text-balance leading-none;
   }
+  p {
+    @apply text-pretty;
+  }
+}
+
+@utility form-lable {
+  @apply after:absolute after:content-["*"] after:text-red-500 after:ml-0.5 block;
+}
+
+@utility form-error-message {
+  @apply text-red-500 italic text-fs-200;
 }
