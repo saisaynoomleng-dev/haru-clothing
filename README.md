@@ -25,4 +25,4 @@
 ## Project Timeline
 
 - 3/12/2026 => project research
-- 3/23/2026 => initialize app
+- 3/23/2026 => initialize app, setup cms
