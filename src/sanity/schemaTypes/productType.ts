@@ -2,6 +2,7 @@ import { formatPrice, formatTitle, skuGenerator } from '@/lib/formatter';
 import { FaTshirt } from 'react-icons/fa';
 import { defineField, defineType } from 'sanity';
 import { sanitySlugifier } from './components/sanitySlugifier';
+import { SkuInput } from './components/skuInput';
 
 export const productType = defineType({
   name: 'product',
@@ -19,7 +20,7 @@ export const productType = defineType({
       name: 'sku',
       title: 'Product SKU',
       type: 'string',
-      initialValue: skuGenerator(),
+      components: { input: SkuInput },
       validation: (rule) => rule.required(),
     }),
     defineField({
@@ -46,25 +47,80 @@ export const productType = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: 'availableColors',
-      title: 'Product Colors',
-      type: 'array',
-      of: [{ type: 'reference', to: [{ type: 'productColor' }] }],
-      validation: (rule) => rule.required(),
-    }),
-    defineField({
-      name: 'availableSizes',
-      title: 'Product Sizes',
-      type: 'array',
-      of: [{ type: 'reference', to: [{ type: 'productSize' }] }],
-    }),
-    defineField({
       name: 'brand',
       title: 'Product Brand',
       type: 'reference',
       to: [{ type: 'productBrand' }],
       validation: (rule) => rule.required(),
     }),
+
+    defineField({
+      name: 'variants',
+      title: 'Product Variants',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          name: 'variant',
+          fields: [
+            defineField({
+              name: 'sku',
+              title: 'Product SKU',
+              type: 'string',
+              components: { input: SkuInput },
+              validation: (rule) => rule.required(),
+            }),
+            defineField({
+              name: 'color',
+              title: 'Color',
+              type: 'reference',
+              to: [{ type: 'productColor' }],
+            }),
+            defineField({
+              name: 'size',
+              title: 'Size',
+              type: 'reference',
+              to: [{ type: 'productSize' }],
+            }),
+            defineField({
+              name: 'stock',
+              title: 'Stock Quantity',
+              type: 'number',
+              validation: (rule) => rule.required(),
+            }),
+            defineField({
+              name: 'priceOverride',
+              title: 'Price Override',
+              description:
+                'Only fill this if the price is different from the base price',
+              type: 'number',
+            }),
+            defineField({
+              name: 'fit',
+              title: 'Fit size',
+              type: 'string',
+              options: {
+                list: [
+                  { title: 'Slim Fit', value: 'slim-fit' },
+                  { title: 'Oversized', value: 'oversized' },
+                  { title: 'Petite', value: 'petite' },
+                  { title: 'tall', value: 'tall' },
+                ],
+                layout: 'radio',
+              },
+            }),
+            defineField({
+              name: 'mainImages',
+              title: 'Variant Images',
+              type: 'array',
+              of: [{ type: 'blockImage' }],
+              validation: (rule) => rule.required(),
+            }),
+          ],
+        },
+      ],
+    }),
+
     defineField({
       name: 'tag',
       title: 'Product Tags',
@@ -84,6 +140,18 @@ export const productType = defineType({
       title: 'Product Description',
       type: 'blockContent',
       validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: 'status',
+      title: 'Status',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Draft', value: 'draft' },
+          { title: 'Published', value: 'published' },
+        ],
+        layout: 'radio',
+      },
     }),
   ],
   preview: {
