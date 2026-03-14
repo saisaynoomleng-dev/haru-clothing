@@ -1,3 +1,5 @@
+import { randomBytes } from 'crypto';
+
 export const formatTitle = (title: string) => {
   return title
     .split(' ')
@@ -6,7 +8,10 @@ export const formatTitle = (title: string) => {
 };
 
 export const skuGenerator = () => {
-  return Math.random().toString(36).slice(2).toUpperCase();
+  const random = randomBytes(3).toString('hex').toUpperCase();
+  const timestamp = Date.now().toString(36).toUpperCase();
+
+  return `SKU-${timestamp}-${random}`;
 };
 
 export const formatPrice = (price: number) => {
