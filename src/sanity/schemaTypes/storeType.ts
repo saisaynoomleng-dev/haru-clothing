@@ -65,6 +65,18 @@ export const storeType = defineType({
       type: 'blockImage',
       validation: (rule) => rule.required(),
     }),
+    defineField({
+      name: 'lat',
+      title: 'Latitudee',
+      type: 'number',
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: 'long',
+      title: 'Longtitude',
+      type: 'number',
+      validation: (rule) => rule.required(),
+    }),
   ],
   preview: {
     select: {

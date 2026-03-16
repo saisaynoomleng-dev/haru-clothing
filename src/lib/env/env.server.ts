@@ -7,5 +7,7 @@ export const env = z
     SANITY_READ_WRITE_TOKEN: z.string().min(1).startsWith('sk'),
     CLERK_SECRET_KEY: z.string().startsWith('sk_'),
     DATABASE_URL: z.string().startsWith('postgresql://'),
+    SANITY_PRODUCT_WEBHOOK_SECRET: z.string().min(32),
+    SANITY_CAREER_WEBHOOK_SECRET: z.string().min(32),
   })
   .parse(process.env);

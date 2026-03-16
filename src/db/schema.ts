@@ -63,6 +63,7 @@ export const AddressTable = t.pgTable('addresses', {
 
 export const ProductTable = t.pgTable('products', {
   id: t.uuid('id').primaryKey().defaultRandom(),
+  name: t.varchar('name', { length: 255 }).notNull(),
   sanityId: t.varchar('sanity_id', { length: 255 }).notNull().unique(),
   sku: t.varchar('sku', { length: 50 }).notNull().unique(),
   sanitySlug: t.varchar('sanity_slug', { length: 255 }).notNull().unique(),
@@ -84,15 +85,13 @@ export const ProductVariantTable = t.pgTable(
       .references(() => ProductTable.id, { onDelete: 'cascade' })
       .notNull(),
     sku: t.varchar('sku', { length: 50 }).notNull().unique(),
-    basePriceInCents: t.integer('base_price_in_cents').notNull(),
+    basePriceInCents: t.integer('base_price_in_cents'),
     imageUrl: t.varchar('image_url').notNull(),
     numberInStock: t.integer('number_in_stock').notNull(),
-    brand: t.varchar('brand', { length: 50 }).notNull(),
     color: t.varchar('color', { length: 50 }).notNull(),
-    size: t.varchar('size', { length: 50 }).notNull(),
-    fit: t.varchar('fit', { length: 20 }).notNull(),
-    status: productStatus('status').notNull().default('draft'),
-    isDeleted: t.boolean('is_deleted').notNull().default(false),
+    size: t.varchar('size', { length: 50 }),
+    fit: t.varchar('fit', { length: 20 }),
+
     ...timestamp,
   },
   (table) => [t.index('product_variant_idx').on(table.originalProductId)],
@@ -197,6 +196,8 @@ export const CareerTable = t.pgTable('careers', {
   sanityId: t.varchar('sanity_id', { length: 255 }).notNull().unique(),
   name: t.varchar('name', { length: 255 }).notNull(),
   isOpen: t.boolean('is_open').notNull().default(true),
+  isDeleted: t.boolean('is_deleted').notNull().default(false),
+  sanitySlug: t.varchar('sanity_slug', { length: 255 }).notNull().unique(),
   ...timestamp,
 });
 

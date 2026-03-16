@@ -25,6 +25,25 @@ export const careerType = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: 'department',
+      title: 'Department',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Engineering', value: 'engineer' },
+          { title: 'Operations', value: 'operations' },
+          { title: 'Growth & Marketing', value: 'growth-&-marketing' },
+          { title: 'Design', value: 'design' },
+          { title: 'Marchandising', value: 'marchandising' },
+          { title: 'Support', value: 'support' },
+          { title: 'Marketing', value: 'marketing' },
+          { title: 'People', value: 'people' },
+          { title: 'Sales', value: 'sales' },
+        ],
+        layout: 'radio',
+      },
+    }),
+    defineField({
       name: 'body',
       title: 'Position Description',
       type: 'blockContent',

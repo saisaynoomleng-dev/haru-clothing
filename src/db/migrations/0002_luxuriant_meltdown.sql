@@ -1,0 +1,1 @@
+ALTER TABLE "product_variants" ALTER COLUMN "base_price_in_cents" DROP NOT NULL;

@@ -25,4 +25,11 @@
 ## Project Timeline
 
 - 3/12/2026 => project research
-- 3/23/2026 => initialize app, setup cms
+- 3/13/2026 => initialize app, setup cms
+- 3/14/2026 => setup db, seed data
+
+---
+
+## Features
+
+- Users can buy the same product with variants such as color, sizes.
