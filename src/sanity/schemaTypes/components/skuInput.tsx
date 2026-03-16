@@ -14,7 +14,6 @@ export function SkuInput(props: StringInputProps) {
   return (
     <Flex gap={3} align={'center'}>
       <Box flex={1}>{props.renderDefault(props)}</Box>
-      {props.value ? <Code size={4}>{props.value}</Code> : null}
       <Button mode="ghost" onClick={generateSKU} text="Generate SKU" />
     </Flex>
   );

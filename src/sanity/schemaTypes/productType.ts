@@ -120,7 +120,12 @@ export const productType = defineType({
         },
       ],
     }),
-
+    defineField({
+      name: 'stock',
+      title: 'Stock Quantity',
+      type: 'number',
+      validation: (rule) => rule.required(),
+    }),
     defineField({
       name: 'tag',
       title: 'Product Tags',
