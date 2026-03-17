@@ -28,11 +28,5 @@ export default async function Home() {
   const { data } = await sanityFetch({
     query: ALL_MEMBERS_QUERY,
   });
-  return (
-    <main>
-      {data.members.map((m) => (
-        <MemberCardSkeleton key={m.slug} {...m} />
-      ))}
-    </main>
-  );
+  return <main></main>;
 }
