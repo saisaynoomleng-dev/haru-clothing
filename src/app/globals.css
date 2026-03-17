@@ -1,8 +1,8 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
 @import 'shadcn/tailwind.css';
-@import "tw-animate-css";
-@import "shadcn/tailwind.css";
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
 @plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:is(.dark *));
@@ -178,4 +178,8 @@
 
 @utility form-error-message {
   @apply text-red-500 italic text-fs-200;
+}
+
+@utility divider {
+  @apply h-px w-[80%] mx-auto bg-brand-black/20;
 }

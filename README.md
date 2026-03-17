@@ -27,7 +27,8 @@
 - 3/12/2026 => project research
 - 3/13/2026 => initialize app, setup cms
 - 3/14/2026 => setup db, seed data
-- 3/16/2026 =>
+- 3/16/2026 => development
+- 3/17/2026 => development
 
 ---
 
