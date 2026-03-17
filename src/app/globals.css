@@ -1,6 +1,8 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
 @import 'shadcn/tailwind.css';
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 @plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:is(.dark *));
@@ -49,8 +51,6 @@
 }
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
@@ -81,6 +81,8 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
 }
 
 .dark {
@@ -149,10 +151,10 @@
 
 @layer base {
   html {
-    @apply scroll-smooth;
+    @apply scroll-smooth font-sans;
   }
   body {
-    @apply bg-brand-white text-brand-black overflow-x-hidden leading-normal tracking-normal text-fs-400;
+    @apply overflow-x-hidden leading-normal tracking-normal font-nunito bg-background text-foreground;
   }
   h1,
   h2,
@@ -164,6 +166,9 @@
   }
   p {
     @apply text-pretty;
+  }
+  * {
+    @apply border-border outline-ring/50;
   }
 }
 
