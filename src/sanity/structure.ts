@@ -1,5 +1,5 @@
 import { CiTextAlignJustify } from 'react-icons/ci';
-import { FaQuestion, FaTshirt } from 'react-icons/fa';
+import { FaNewspaper, FaQuestion, FaTshirt } from 'react-icons/fa';
 import { HiUserGroup } from 'react-icons/hi';
 import {
   IoMdBriefcase,
@@ -47,6 +47,7 @@ export const structure: StructureResolver = (S) =>
         .icon(CiTextAlignJustify),
 
       S.divider().title('Marketing'),
+      S.documentTypeListItem('blog').title('Blogs').icon(FaNewspaper),
       S.documentTypeListItem('blogCategory')
         .title('Blog Categories')
         .icon(MdCategory),

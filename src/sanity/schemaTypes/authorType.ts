@@ -36,6 +36,11 @@ export const authorType = defineType({
       type: 'text',
       validation: (rule) => rule.required(),
     }),
+    defineField({
+      name: 'socialLink',
+      title: 'Social Link',
+      type: 'string',
+    }),
   ],
   preview: {
     select: {

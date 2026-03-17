@@ -14,6 +14,7 @@ import { storeType } from './storeType';
 import { utilityPageType } from './utilityPageTypes';
 import { faqsType } from './faqsType';
 import { careerType } from './careerType';
+import { blogType } from './components/blogType';
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -32,5 +33,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     utilityPageType,
     faqsType,
     careerType,
+    blogType,
   ],
 };

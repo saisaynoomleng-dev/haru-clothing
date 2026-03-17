@@ -20,3 +20,11 @@ export const formatPrice = (price: number) => {
     currency: 'usd',
   }).format(price);
 };
+
+export const formatDate = (date: string) => {
+  return new Date(date).toLocaleDateString('en-US', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+  });
+};
