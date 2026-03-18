@@ -9,5 +9,6 @@ export const env = z
     DATABASE_URL: z.string().startsWith('postgresql://'),
     SANITY_PRODUCT_WEBHOOK_SECRET: z.string().min(32),
     SANITY_CAREER_WEBHOOK_SECRET: z.string().min(32),
+    RESEND_API_KEY: z.string().startsWith('re'),
   })
   .parse(process.env);
