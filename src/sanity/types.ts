@@ -505,6 +505,15 @@ export type ALL_MEMBERS_QUERYResult = {
   }>;
   total: number;
 };
+// Variable: UTILITY_PAGE_QUERY
+// Query: *[_type == 'utilityPage' && slug.current == $slug][0]{  name,  "slug": slug.current,  body,  "title": seo.title,  "description": seo.description }
+export type UTILITY_PAGE_QUERYResult = {
+  name: string | null;
+  slug: string | null;
+  body: BlockContent | null;
+  title: string | null;
+  description: string | null;
+} | null;
 
 // Query TypeMap
 import '@sanity/client';
@@ -514,5 +523,6 @@ declare module '@sanity/client' {
     '{\n  "blogs": *[_type == \'blog\'\n            && defined(slug.current)]{\n              name,\n              "slug": slug.current,\n              publishedAt,\n              "imageUrl": mainImage.asset->.url,\n              "imageAlt": mainImage.alt,\n              "category": category->.name,\n              "author": author->.name,\n            },\n  "total": count(*[_type == \'blog\'\n            && defined(slug.current)])\n}': ALL_BLOGS_QUERYResult;
     '*[_type == \'faq\'\n && defined(slug.current)]{\n  name,\n  "slug": slug.current,\n  faqs[]{\n    question,\n    answer\n  }\n }': ALL_FAQS_QUERYResult;
     '{\n  "members": *[_type == \'teamMember\'\n              && defined(slug.current)]{\n                name,\n                "slug": slug.current,\n                position,\n                "imageUrl": mainImage.asset->.url,\n                "imageAlt": mainImage.alt   \n              },\n  "total": count(*[_type == \'teamMember\'\n              && defined(slug.current)])\n}': ALL_MEMBERS_QUERYResult;
+    '*[_type == \'utilityPage\'\n && slug.current == $slug][0]{\n  name,\n  "slug": slug.current,\n  body,\n  "title": seo.title,\n  "description": seo.description\n }': UTILITY_PAGE_QUERYResult;
   }
 }
