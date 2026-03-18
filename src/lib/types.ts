@@ -46,3 +46,17 @@ export type MySanityImageProps = {
 export type MemberCardProps = NonNullable<
   ALL_MEMBERS_QUERYResult['members']
 >[number] & { className?: string };
+
+// Page Title
+export type PageTitleProps = {
+  title: string;
+  text: string;
+  className?: string;
+};
+
+// Form Previous Props
+export type PreviousFormProps = {
+  success: boolean;
+  message: string;
+  field?: string;
+};

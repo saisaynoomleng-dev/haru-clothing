@@ -10,7 +10,7 @@ const SubmitButton = ({ children, className }: SubmitButtonProps) => {
   const { pending } = useFormStatus();
 
   return (
-    <Button className={clsx('', className)}>
+    <Button className={clsx('font-semibold', className)}>
       {pending ? (
         <span>
           <LoadingSpinner />
