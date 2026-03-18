@@ -15,6 +15,7 @@ const NAV_LINKS = [
   { name: 'About Us', url: '/about-us' },
   { name: 'Blog', url: '/blog' },
   { name: 'Contact Us', url: '/contact-us' },
+  { name: 'Stores', url: '/stores' },
 ];
 
 const Header = () => {
@@ -27,7 +28,9 @@ const Header = () => {
       <div className="hidden md:flex flex-col gap-y-5">
         <div className="flex justify-between items-center">
           <div>
-            <BrandLogo />
+            <Link href="/">
+              <BrandLogo />
+            </Link>
           </div>
 
           <SearchForm />
@@ -61,7 +64,9 @@ const Header = () => {
       <div className="md:hidden flex flex-col gap-y-5 relative">
         <div className="flex justify-between items-center">
           <div>
-            <BrandLogo />
+            <Link href="/">
+              <BrandLogo />
+            </Link>
           </div>
 
           <button

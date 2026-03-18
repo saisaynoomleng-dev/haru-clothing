@@ -30,5 +30,9 @@ export const formatDate = (date: string) => {
 };
 
 export const removeDash = (text: string) => {
-  return text.replace(/-/g, '');
+  return text.replace(/-/g, ' ');
+};
+
+export const addDashInSpace = (text: string) => {
+  return text.replace(/\s/g, '-');
 };

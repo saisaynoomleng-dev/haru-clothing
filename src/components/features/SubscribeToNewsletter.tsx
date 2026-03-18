@@ -33,7 +33,7 @@ const SubscribeToNewsletter = ({ className }: { className?: string }) => {
     <Form
       action={actionFunction}
       className={clsx(
-        'flex flex-col gap-y-5 md:gap-y-10 px-5 md:px-10 newsletter-bg py-10 md:py-20',
+        'flex flex-col gap-y-5 md:gap-y-10 px-5 md:px-10 newsletter-bg pb-10 md:pb-20 pt-10',
         className,
       )}
     >
@@ -41,7 +41,7 @@ const SubscribeToNewsletter = ({ className }: { className?: string }) => {
         Subscribe to our Newsletter
       </h3>
 
-      <div className="flex gap-x-3">
+      <div className="flex gap-x-1 items-center justify-center">
         <label htmlFor="email" className="sr-only">
           Enter your email address
         </label>
@@ -51,6 +51,7 @@ const SubscribeToNewsletter = ({ className }: { className?: string }) => {
           id="email"
           autoComplete="email"
           placeholder="johndoe@example.com"
+          className="max-w-100"
         />
         {!state.success ? (
           <p className="form-error-message">{state.message}</p>

@@ -162,6 +162,7 @@ export type Store = {
   mainImage?: BlockImage;
   lat?: number;
   long?: number;
+  continent?: 'north-america' | 'south-america' | 'europe' | 'asia';
 };
 
 export type Author = {
@@ -514,6 +515,36 @@ export type UTILITY_PAGE_QUERYResult = {
   title: string | null;
   description: string | null;
 } | null;
+// Variable: ALL_STORES_QUERY
+// Query: {  "stores": *[_type == 'store'             && defined(slug.current)             && (              (!defined($country)) || count($country) == 0 || country in $country             )             &&(              (!defined($continent)) || count($continent) == 0 || continent in $continent             )             ]             [$startIndex...$endIndex]             |order(name){              name,              "slug": slug.current,              city,              country,              continent,              "imageUrl": mainImage.asset->.url,              "imageAlt": mainImage.alt              },  "total": count(*[_type == 'store'             && defined(slug.current)             && (              (!defined($country)) || count($country) == 0 || country in $country             )             &&(              (!defined($continent)) || count($continent) == 0 || continent in $continent             )             ])}
+export type ALL_STORES_QUERYResult = {
+  stores: Array<{
+    name: string | null;
+    slug: string | null;
+    city: string | null;
+    country: string | null;
+    continent: 'asia' | 'europe' | 'north-america' | 'south-america' | null;
+    imageUrl: string | null;
+    imageAlt: string | null;
+  }>;
+  total: number;
+};
+// Variable: STORE_QUERY
+// Query: *[_type == 'store'&& slug.current == $slug][0]{              name,              "slug": slug.current,              address1,              address2,              city,              zip,              state,              country,              lat,              long,              "imageUrl": mainImage.asset->.url,              "imageAlt": mainImage.alt}
+export type STORE_QUERYResult = {
+  name: string | null;
+  slug: string | null;
+  address1: string | null;
+  address2: string | null;
+  city: string | null;
+  zip: string | null;
+  state: string | null;
+  country: string | null;
+  lat: number | null;
+  long: number | null;
+  imageUrl: string | null;
+  imageAlt: string | null;
+} | null;
 
 // Query TypeMap
 import '@sanity/client';
@@ -524,5 +555,7 @@ declare module '@sanity/client' {
     '*[_type == \'faq\'\n && defined(slug.current)]{\n  name,\n  "slug": slug.current,\n  faqs[]{\n    question,\n    answer\n  }\n }': ALL_FAQS_QUERYResult;
     '{\n  "members": *[_type == \'teamMember\'\n              && defined(slug.current)]{\n                name,\n                "slug": slug.current,\n                position,\n                "imageUrl": mainImage.asset->.url,\n                "imageAlt": mainImage.alt   \n              },\n  "total": count(*[_type == \'teamMember\'\n              && defined(slug.current)])\n}': ALL_MEMBERS_QUERYResult;
     '*[_type == \'utilityPage\'\n && slug.current == $slug][0]{\n  name,\n  "slug": slug.current,\n  body,\n  "title": seo.title,\n  "description": seo.description\n }': UTILITY_PAGE_QUERYResult;
+    '{\n  "stores": *[_type == \'store\'\n             && defined(slug.current)\n             && (\n              (!defined($country)) || count($country) == 0 || country in $country\n             )\n             &&(\n              (!defined($continent)) || count($continent) == 0 || continent in $continent\n             )\n             ]\n             [$startIndex...$endIndex]\n             |order(name){\n              name,\n              "slug": slug.current,\n              city,\n              country,\n              continent,\n              "imageUrl": mainImage.asset->.url,\n              "imageAlt": mainImage.alt\n              },\n  "total": count(*[_type == \'store\'\n             && defined(slug.current)\n             && (\n              (!defined($country)) || count($country) == 0 || country in $country\n             )\n             &&(\n              (!defined($continent)) || count($continent) == 0 || continent in $continent\n             )\n             ])\n}': ALL_STORES_QUERYResult;
+    '*[_type == \'store\'\n&& slug.current == $slug][0]{\n              name,\n              "slug": slug.current,\n              address1,\n              address2,\n              city,\n              zip,\n              state,\n              country,\n              lat,\n              long,\n              "imageUrl": mainImage.asset->.url,\n              "imageAlt": mainImage.alt\n}': STORE_QUERYResult;
   }
 }
