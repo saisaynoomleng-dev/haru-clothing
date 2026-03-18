@@ -55,3 +55,13 @@ export const ALL_MEMBERS_QUERY = defineQuery(`{
   "total": count(*[_type == 'teamMember'
               && defined(slug.current)])
 }`);
+
+// utility page
+export const UTILITY_PAGE_QUERY = defineQuery(`*[_type == 'utilityPage'
+ && slug.current == $slug][0]{
+  name,
+  "slug": slug.current,
+  body,
+  "title": seo.title,
+  "description": seo.description
+ }`);
