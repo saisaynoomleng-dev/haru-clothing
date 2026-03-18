@@ -7,6 +7,7 @@ import {
 } from 'react-icons/ci';
 import BrandLogo from './BrandLogo';
 import Link from 'next/link';
+import SubscribeToNewsletter from '../features/SubscribeToNewsletter';
 
 const SOCIAL_LINKS = [
   {

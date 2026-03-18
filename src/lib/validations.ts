@@ -44,3 +44,8 @@ export const contactFormSchema = z.object({
     .max(3000, 'Message character limit is 3000.'),
   phone: z.string().min(1, 'Phone Number must have at least 1 character'),
 });
+
+// newsletter form
+export const newsletterFormSchema = z.object({
+  email: z.email().min(1, 'Must be a valid email address'),
+});

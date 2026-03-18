@@ -38,6 +38,8 @@ const ContactUsPage = () => {
   );
 
   useEffect(() => {
+    if (!state.message) return;
+
     if (state.success) {
       toast.success(state.message);
     } else {
