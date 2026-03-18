@@ -1,3 +1,4 @@
+import SubscribeToNewsletter from '@/components/features/SubscribeToNewsletter';
 import Banner from '@/components/shared/Banner';
 import BlogCard from '@/components/shared/BlogCard';
 import Bounded from '@/components/shared/Bounded';
@@ -39,6 +40,8 @@ export default async function Home() {
         commodi autem exercitationem dolore, mollitia molestiae reprehenderit
         eligendi optio accusantium facere?
       </p>
+
+      <SubscribeToNewsletter />
     </Bounded>
   );
 }
