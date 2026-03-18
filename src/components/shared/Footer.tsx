@@ -60,81 +60,86 @@ const INFORMATION_LINKS = [
 
 const Footer = () => {
   return (
-    <footer className="grid md:grid-cols-2 lg:grid-cols-4 gap-3  bg-brand-pink-100 p-5 text-fs-300">
-      <div className="flex flex-col gap-y-3">
-        <div>
-          <BrandLogo />
+    <footer className=" text-fs-300">
+      <SubscribeToNewsletter />
+      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-3 bg-brand-pink-100 p-5">
+        <div className="flex flex-col gap-y-3">
+          <div>
+            <BrandLogo />
+          </div>
+          <p>
+            Premium apparel defined by Japanese textile heritage and functional
+            utility. Quality without compromise.
+          </p>
+          <div className="flex gap-x-2">
+            {SOCIAL_LINKS.map((s) => (
+              <Link
+                href={s.url}
+                key={s.name}
+                className="p-1 border border-brand-black rounded-full group  hover:bg-brand-black"
+              >
+                <span className="group-hover:text-brand-white">
+                  {s.element}
+                </span>
+              </Link>
+            ))}
+          </div>
         </div>
-        <p>
-          Premium apparel defined by Japanese textile heritage and functional
-          utility. Quality without compromise.
-        </p>
-        <div className="flex gap-x-2">
-          {SOCIAL_LINKS.map((s) => (
-            <Link
-              href={s.url}
-              key={s.name}
-              className="p-1 border border-brand-black rounded-full group  hover:bg-brand-black"
-            >
-              <span className="group-hover:text-brand-white">{s.element}</span>
-            </Link>
-          ))}
+
+        <div className="flex flex-col gap-y-3">
+          <p className="font-semibold text-fs-400">Company</p>
+          <div className="flex flex-col gap-y-2">
+            {COMPANY_LINKS.map((l) => (
+              <Link
+                href={l.url}
+                key={l.url}
+                className="hover:underline underline-offset-4"
+              >
+                {l.name}
+              </Link>
+            ))}
+          </div>
         </div>
-      </div>
 
-      <div className="flex flex-col gap-y-3">
-        <p className="font-semibold text-fs-400">Company</p>
-        <div className="flex flex-col gap-y-2">
-          {COMPANY_LINKS.map((l) => (
-            <Link
-              href={l.url}
-              key={l.url}
-              className="hover:underline underline-offset-4"
-            >
-              {l.name}
-            </Link>
-          ))}
+        <div className="flex flex-col gap-y-3">
+          <p className="font-semibold text-fs-400">Useful Links</p>
+          <div className="flex flex-col gap-y-2">
+            {USEFUL_LINKS.map((l) => (
+              <Link
+                href={l.url}
+                key={l.url}
+                className="hover:underline underline-offset-4"
+              >
+                {l.name}
+              </Link>
+            ))}
+          </div>
         </div>
-      </div>
 
-      <div className="flex flex-col gap-y-3">
-        <p className="font-semibold text-fs-400">Useful Links</p>
-        <div className="flex flex-col gap-y-2">
-          {USEFUL_LINKS.map((l) => (
-            <Link
-              href={l.url}
-              key={l.url}
-              className="hover:underline underline-offset-4"
-            >
-              {l.name}
-            </Link>
-          ))}
+        <div className="flex flex-col gap-y-3">
+          <p className="font-semibold text-fs-400">Our Information</p>
+          <div className="flex flex-col gap-y-2">
+            {INFORMATION_LINKS.map((l) => (
+              <Link
+                href={l.url}
+                key={l.url}
+                className="hover:underline underline-offset-4"
+              >
+                {l.name}
+              </Link>
+            ))}
+          </div>
         </div>
-      </div>
 
-      <div className="flex flex-col gap-y-3">
-        <p className="font-semibold text-fs-400">Our Information</p>
-        <div className="flex flex-col gap-y-2">
-          {INFORMATION_LINKS.map((l) => (
-            <Link
-              href={l.url}
-              key={l.url}
-              className="hover:underline underline-offset-4"
-            >
-              {l.name}
-            </Link>
-          ))}
+        <div className="divider col-span-full" />
+
+        <div className="col-span-full flex flex-col place-self-end md:place-self-auto md:flex-row md:justify-between">
+          <p>
+            Copyright&copy;{new Date().getFullYear()} Haru Clothing. All right
+            reserved.
+          </p>
+          <p>Designed & developed by Sai Say Noom Leng</p>
         </div>
-      </div>
-
-      <div className="divider col-span-full" />
-
-      <div className="col-span-full flex flex-col place-self-end md:place-self-auto md:flex-row md:justify-between">
-        <p>
-          Copyright&copy;{new Date().getFullYear()} Haru Clothing. All right
-          reserved.
-        </p>
-        <p>Designed & developed by Sai Say Noom Leng</p>
       </div>
     </footer>
   );

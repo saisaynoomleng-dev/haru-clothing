@@ -65,3 +65,51 @@ export const UTILITY_PAGE_QUERY = defineQuery(`*[_type == 'utilityPage'
   "title": seo.title,
   "description": seo.description
  }`);
+
+// get all stores
+export const ALL_STORES_QUERY = defineQuery(`{
+  "stores": *[_type == 'store'
+             && defined(slug.current)
+             && (
+              (!defined($country)) || count($country) == 0 || country in $country
+             )
+             &&(
+              (!defined($continent)) || count($continent) == 0 || continent in $continent
+             )
+             ]
+             [$startIndex...$endIndex]
+             |order(name){
+              name,
+              "slug": slug.current,
+              city,
+              country,
+              continent,
+              "imageUrl": mainImage.asset->.url,
+              "imageAlt": mainImage.alt
+              },
+  "total": count(*[_type == 'store'
+             && defined(slug.current)
+             && (
+              (!defined($country)) || count($country) == 0 || country in $country
+             )
+             &&(
+              (!defined($continent)) || count($continent) == 0 || continent in $continent
+             )
+             ])
+}`);
+
+export const STORE_QUERY = defineQuery(`*[_type == 'store'
+&& slug.current == $slug][0]{
+              name,
+              "slug": slug.current,
+              address1,
+              address2,
+              city,
+              zip,
+              state,
+              country,
+              lat,
+              long,
+              "imageUrl": mainImage.asset->.url,
+              "imageAlt": mainImage.alt
+}`);

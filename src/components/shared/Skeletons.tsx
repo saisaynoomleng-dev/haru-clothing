@@ -41,3 +41,13 @@ export const MemberCardSkeleton = () => {
     </div>
   );
 };
+
+// Store Card
+export const StoreCardSkeleton = () => {
+  return (
+    <div className="space-y-3 w-80 h-60">
+      <Skeleton className="w-80 h-40" />
+      <Skeleton className="w-80 h-3" />
+    </div>
+  );
+};

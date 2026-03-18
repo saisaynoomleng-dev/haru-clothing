@@ -2,6 +2,7 @@ import {
   ALL_BLOGS_QUERYResult,
   ALL_MEMBERS_QUERYResult,
   ALL_PRODUCTS_QUERYResult,
+  ALL_STORES_QUERYResult,
 } from '@/sanity/types';
 
 // bounded
@@ -59,4 +60,15 @@ export type PreviousFormProps = {
   success: boolean;
   message: string;
   field?: string;
+};
+
+// Store Card
+export type StoreCardProps = NonNullable<
+  ALL_STORES_QUERYResult['stores']
+>[number] & { className?: string };
+
+// Store Filter
+export type StoreFilterProps = {
+  countries: string[];
+  continents: string[];
 };

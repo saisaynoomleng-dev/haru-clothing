@@ -14,17 +14,11 @@ const SearchForm = ({ className }: { className?: string }) => {
     setText(e.target.value);
   };
 
-  const handleSubmit = (e: React.SubmitEvent) => {
-    e.preventDefault();
-
-    setText('');
-  };
-
   return (
     <Form
+      onSubmit={() => setText('')}
       action="/search"
       className={clsx('flex gap-x-3', className)}
-      onSubmit={handleSubmit}
     >
       <div className="relative w-full">
         <label htmlFor="search-form" className="sr-only">

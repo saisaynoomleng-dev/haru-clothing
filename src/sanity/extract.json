@@ -892,6 +892,31 @@
           "type": "number"
         },
         "optional": true
+      },
+      "continent": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "north-america"
+            },
+            {
+              "type": "string",
+              "value": "south-america"
+            },
+            {
+              "type": "string",
+              "value": "europe"
+            },
+            {
+              "type": "string",
+              "value": "asia"
+            }
+          ]
+        },
+        "optional": true
       }
     }
   },

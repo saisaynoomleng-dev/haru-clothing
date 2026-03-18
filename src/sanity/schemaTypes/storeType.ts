@@ -77,6 +77,20 @@ export const storeType = defineType({
       type: 'number',
       validation: (rule) => rule.required(),
     }),
+    defineField({
+      name: 'continent',
+      title: 'Continent',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'North America', value: 'north-america' },
+          { title: 'South America', value: 'south-america' },
+          { title: 'Europe', value: 'europe' },
+          { title: 'Asia', value: 'asia' },
+        ],
+        layout: 'radio',
+      },
+    }),
   ],
   preview: {
     select: {

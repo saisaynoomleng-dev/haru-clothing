@@ -5,7 +5,7 @@ const PageTitle = ({ title, text, className }: PageTitleProps) => {
   return (
     <div
       className={clsx(
-        'page-title-bg flex flex-col justify-center items-center py-5 md:py-10 font-playfair',
+        'page-title-bg flex flex-col justify-center items-center py-5 md:py-10 font-playfair h-50',
         className,
       )}
     >
