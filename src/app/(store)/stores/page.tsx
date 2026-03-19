@@ -69,10 +69,10 @@ const StoreFinderPage = async ({
         className="col-span-full"
       />
 
-      <div className="grid md:grid-cols-[auto_1fr] md:gap-x-10">
+      <div className="grid grid-cols-[auto_1fr] md:gap-x-10 relative">
         <StoreFilter countries={countries} continents={continents} />
 
-        <div className="grid md:grid-cols-2 gap-5 md:border-l border-brand-black/20 md:pl-5">
+        <div className="grid md:grid-cols-2 gap-5 border-l border-brand-black/20 pl-5">
           {data.stores.map((store) => (
             <Suspense key={store.slug} fallback={<StoreCardSkeleton />}>
               <StoreCard {...store} />

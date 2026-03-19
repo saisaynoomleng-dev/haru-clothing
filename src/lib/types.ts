@@ -72,3 +72,10 @@ export type StoreFilterProps = {
   countries: string[];
   continents: string[];
 };
+
+// Back to
+export type BackToProps = {
+  className?: string;
+  children: React.ReactNode;
+  href: string;
+};
