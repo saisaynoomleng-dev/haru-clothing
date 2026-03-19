@@ -4,6 +4,7 @@ import { StoreFilterProps } from '@/lib/types';
 import { Checkbox } from '../ui/checkbox';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { addDashInSpace } from '@/lib/formatter';
+import { Button } from '@react-email/components';
 
 const StoreFilter = ({ countries, continents }: StoreFilterProps) => {
   const router = useRouter();
@@ -38,9 +39,8 @@ const StoreFilter = ({ countries, continents }: StoreFilterProps) => {
   };
 
   return (
-    <div>
-      {/* desktop view */}
-      <aside className="md:flex flex-col gap-y-3 hidden">
+    <div className="flex items-start">
+      <aside className="flex flex-col gap-y-3 pr-10 sticky top-5">
         <div className="flex flex-col">
           <p className="font-semibold">Countries</p>
           <ul>
@@ -81,8 +81,6 @@ const StoreFilter = ({ countries, continents }: StoreFilterProps) => {
           </ul>
         </div>
       </aside>
-
-      {/* mobile view */}
     </div>
   );
 };

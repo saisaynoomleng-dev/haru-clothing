@@ -87,6 +87,7 @@ const Header = () => {
               <Link
                 href={l.url}
                 key={l.url}
+                onClick={() => setNavOpen(false)}
                 className={clsx(
                   'hover:text-brand-pink-200/80',
                   l.url === pathname && 'font-bold text-brand-pink-200',
