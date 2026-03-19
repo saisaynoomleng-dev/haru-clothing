@@ -485,13 +485,14 @@ export type ALL_BLOGS_QUERYResult = {
   total: number;
 };
 // Variable: ALL_FAQS_QUERY
-// Query: *[_type == 'faq' && defined(slug.current)]{  name,  "slug": slug.current,  faqs[]{    question,    answer  } }
+// Query: *[_type == 'faq' && defined(slug.current)]{  name,  "slug": slug.current,  faqs[]{    question,    answer,    _key  } }
 export type ALL_FAQS_QUERYResult = Array<{
   name: string | null;
   slug: string | null;
   faqs: Array<{
     question: string | null;
     answer: string | null;
+    _key: string;
   }> | null;
 }>;
 // Variable: ALL_MEMBERS_QUERY
@@ -552,7 +553,7 @@ declare module '@sanity/client' {
   interface SanityQueries {
     '{\n  "products": *[_type == \'product\'\n               && defined(slug.current)]{\n                  name,\n                  "slug": slug.current,\n                  "category": category->.name,\n                  basePrice,\n                  "imageUrl": mainImages[0].asset->.url,\n                  "imageAlt": mainImages[0].alt\n               },\n  "total": count(*[_type == \'product\'\n               && defined(slug.current)])\n}': ALL_PRODUCTS_QUERYResult;
     '{\n  "blogs": *[_type == \'blog\'\n            && defined(slug.current)]{\n              name,\n              "slug": slug.current,\n              publishedAt,\n              "imageUrl": mainImage.asset->.url,\n              "imageAlt": mainImage.alt,\n              "category": category->.name,\n              "author": author->.name,\n            },\n  "total": count(*[_type == \'blog\'\n            && defined(slug.current)])\n}': ALL_BLOGS_QUERYResult;
-    '*[_type == \'faq\'\n && defined(slug.current)]{\n  name,\n  "slug": slug.current,\n  faqs[]{\n    question,\n    answer\n  }\n }': ALL_FAQS_QUERYResult;
+    '*[_type == \'faq\'\n && defined(slug.current)]{\n  name,\n  "slug": slug.current,\n  faqs[]{\n    question,\n    answer,\n    _key\n  }\n }': ALL_FAQS_QUERYResult;
     '{\n  "members": *[_type == \'teamMember\'\n              && defined(slug.current)]{\n                name,\n                "slug": slug.current,\n                position,\n                "imageUrl": mainImage.asset->.url,\n                "imageAlt": mainImage.alt   \n              },\n  "total": count(*[_type == \'teamMember\'\n              && defined(slug.current)])\n}': ALL_MEMBERS_QUERYResult;
     '*[_type == \'utilityPage\'\n && slug.current == $slug][0]{\n  name,\n  "slug": slug.current,\n  body,\n  "title": seo.title,\n  "description": seo.description\n }': UTILITY_PAGE_QUERYResult;
     '{\n  "stores": *[_type == \'store\'\n             && defined(slug.current)\n             && (\n              (!defined($country)) || count($country) == 0 || country in $country\n             )\n             &&(\n              (!defined($continent)) || count($continent) == 0 || continent in $continent\n             )\n             ]\n             [$startIndex...$endIndex]\n             |order(name){\n              name,\n              "slug": slug.current,\n              city,\n              country,\n              continent,\n              "imageUrl": mainImage.asset->.url,\n              "imageAlt": mainImage.alt\n              },\n  "total": count(*[_type == \'store\'\n             && defined(slug.current)\n             && (\n              (!defined($country)) || count($country) == 0 || country in $country\n             )\n             &&(\n              (!defined($continent)) || count($continent) == 0 || continent in $continent\n             )\n             ])\n}': ALL_STORES_QUERYResult;

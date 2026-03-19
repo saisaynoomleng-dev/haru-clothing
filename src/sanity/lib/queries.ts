@@ -38,7 +38,8 @@ export const ALL_FAQS_QUERY = defineQuery(`*[_type == 'faq'
   "slug": slug.current,
   faqs[]{
     question,
-    answer
+    answer,
+    _key
   }
  }`);
 
