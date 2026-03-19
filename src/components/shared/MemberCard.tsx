@@ -1,13 +1,12 @@
 import { MemberCardProps } from '@/lib/types';
 import clsx from 'clsx';
-import React from 'react';
 import MySanityImage from './MySanityImage';
 
 const MemberCard = ({ className, ...props }: MemberCardProps) => {
-  const { name, slug, position, imageUrl, imageAlt } = props;
+  const { name, position, imageUrl, imageAlt } = props;
 
   return (
-    <div className={clsx('w-80 h-80 flex flex-col gap-y-3')}>
+    <div className={clsx('flex flex-col gap-y-3')}>
       <div className="overflow-hidden">
         {imageAlt && imageUrl ? (
           <MySanityImage
