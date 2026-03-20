@@ -18,7 +18,12 @@ export const ALL_PRODUCTS_QUERY = defineQuery(`{
 // query all blogs
 export const ALL_BLOGS_QUERY = defineQuery(`{
   "blogs": *[_type == 'blog'
-            && defined(slug.current)]{
+            && defined(slug.current)
+            && (
+              (!defined($category)) || count($category) == 0 || category->slug.current in $category
+            )]
+            [$startIndex...$endIndex]
+            | order(publishedAt){
               name,
               "slug": slug.current,
               publishedAt,
@@ -30,6 +35,28 @@ export const ALL_BLOGS_QUERY = defineQuery(`{
   "total": count(*[_type == 'blog'
             && defined(slug.current)])
 }`);
+
+export const ALL_BLOG_CATEGORIES_QUERY = defineQuery(`*[_type == 'blogCategory'
+ && defined(slug.current)]{
+  name,
+  "slug": slug.current
+ }`);
+
+export const BLOG_QUERY = defineQuery(`*[_type == 'blog'
+ && slug.current == $slug][0]{
+  name,
+  "slug": slug.current,
+  publishedAt,
+  minRead,
+  "category": category->name,
+  author->{
+    name,
+    "slug": slug.current
+  },
+  body,
+  "imageUrl": mainImage.asset->.url,
+  "imageAlt": mainImage.alt
+ }`);
 
 // query all faqs
 export const ALL_FAQS_QUERY = defineQuery(`*[_type == 'faq'

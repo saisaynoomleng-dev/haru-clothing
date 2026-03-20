@@ -4,7 +4,6 @@ import { StoreFilterProps } from '@/lib/types';
 import { Checkbox } from '../ui/checkbox';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { addDashInSpace } from '@/lib/formatter';
-import { Button } from '@react-email/components';
 
 const StoreFilter = ({ countries, continents }: StoreFilterProps) => {
   const router = useRouter();

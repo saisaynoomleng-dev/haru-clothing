@@ -1,5 +1,4 @@
 import { BlogCardProps } from '@/lib/types';
-import Link from 'next/link';
 import MySanityImage from './MySanityImage';
 import clsx from 'clsx';
 import { formatDate } from '@/lib/formatter';

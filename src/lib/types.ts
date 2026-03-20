@@ -1,5 +1,6 @@
 import {
   ALL_AUTHORS_QUERYResult,
+  ALL_BLOG_CATEGORIES_QUERYResult,
   ALL_BLOGS_QUERYResult,
   ALL_MEMBERS_QUERYResult,
   ALL_PRODUCTS_QUERYResult,
@@ -84,4 +85,10 @@ export type BackToProps = {
 // Author Card
 export type AuthorCardProps = NonNullable<ALL_AUTHORS_QUERYResult>[number] & {
   className?: string;
+};
+
+// Blog Filter
+export type BlogFilterProps = {
+  className?: string;
+  categories: NonNullable<ALL_BLOG_CATEGORIES_QUERYResult>;
 };
