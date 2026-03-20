@@ -16,8 +16,6 @@
 - PostgreSQL
 - Drizzle
 - React MapGL
-- Redis
-- Zustand
 - GSAP
 
 ---
@@ -31,6 +29,7 @@
 - 3/17/2026 => development
 - 3/18/2026 => development
 - 3/19/2026 => development
+- 3/20/2026 => development
 
 ---
 
