@@ -26,7 +26,7 @@ const Banner = () => {
           <div>
             <span className="text-fs-700">{b.element}</span>
           </div>
-          <div className="flex flex-col gap-y-3">
+          <div className="flex flex-col">
             <p className="font-semibold">{b.title}</p>
             <p className="text-brand-black/50">{b.text}</p>
           </div>

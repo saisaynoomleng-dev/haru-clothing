@@ -1,3 +1,4 @@
+import Banner from '@/components/shared/Banner';
 import Bounded from '@/components/shared/Bounded';
 import MemberCard from '@/components/shared/MemberCard';
 import PageTitle from '@/components/shared/PageTitle';
@@ -115,6 +116,8 @@ const AboutUsPage = async () => {
           ))}
         </div>
       </div>
+
+      <Banner />
     </Bounded>
   );
 };

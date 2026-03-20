@@ -38,7 +38,8 @@ export const ALL_FAQS_QUERY = defineQuery(`*[_type == 'faq'
   "slug": slug.current,
   faqs[]{
     question,
-    answer
+    answer,
+    _key
   }
  }`);
 
@@ -112,4 +113,23 @@ export const STORE_QUERY = defineQuery(`*[_type == 'store'
               long,
               "imageUrl": mainImage.asset->.url,
               "imageAlt": mainImage.alt
+}`);
+
+// authors
+export const ALL_AUTHORS_QUERY = defineQuery(`*[_type == 'author'
+ && defined(slug.current)]{
+  name,
+  "slug": slug.current,
+  "imageUrl": mainImage.asset->.url,
+  "imageAlt": mainImage.alt
+ }`);
+
+export const AUTHOR_QUERY = defineQuery(`*[_type == 'author'
+&& slug.current == $slug][0]{
+  name,
+  "slug": slug.current,
+  "imageUrl": mainImage.asset->.url,
+  "imageAlt": mainImage.alt,
+  body,
+  socialLink
 }`);
