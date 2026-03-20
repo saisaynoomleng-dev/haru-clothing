@@ -1,4 +1,5 @@
 import {
+  ALL_AUTHORS_QUERYResult,
   ALL_BLOGS_QUERYResult,
   ALL_MEMBERS_QUERYResult,
   ALL_PRODUCTS_QUERYResult,
@@ -78,4 +79,9 @@ export type BackToProps = {
   className?: string;
   children: React.ReactNode;
   href: string;
+};
+
+// Author Card
+export type AuthorCardProps = NonNullable<ALL_AUTHORS_QUERYResult>[number] & {
+  className?: string;
 };

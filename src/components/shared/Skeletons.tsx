@@ -51,3 +51,13 @@ export const StoreCardSkeleton = () => {
     </div>
   );
 };
+
+// Author Card
+export const AuthorCardSkeleton = () => {
+  return (
+    <div className="space-y-3 w-80 h-60">
+      <Skeleton className="w-80 h-40" />
+      <Skeleton className="w-80 h-3" />
+    </div>
+  );
+};

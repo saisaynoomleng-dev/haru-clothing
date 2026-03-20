@@ -114,3 +114,22 @@ export const STORE_QUERY = defineQuery(`*[_type == 'store'
               "imageUrl": mainImage.asset->.url,
               "imageAlt": mainImage.alt
 }`);
+
+// authors
+export const ALL_AUTHORS_QUERY = defineQuery(`*[_type == 'author'
+ && defined(slug.current)]{
+  name,
+  "slug": slug.current,
+  "imageUrl": mainImage.asset->.url,
+  "imageAlt": mainImage.alt
+ }`);
+
+export const AUTHOR_QUERY = defineQuery(`*[_type == 'author'
+&& slug.current == $slug][0]{
+  name,
+  "slug": slug.current,
+  "imageUrl": mainImage.asset->.url,
+  "imageAlt": mainImage.alt,
+  body,
+  socialLink
+}`);

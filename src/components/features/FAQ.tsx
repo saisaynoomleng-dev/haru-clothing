@@ -11,14 +11,6 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 
-const TABS = [
-  'general-information-faq',
-  'returns-exchanges-faq',
-  'account-profile-faq',
-  'payments-discounts-faq',
-  'ordering-shipping-faq',
-];
-
 const FAQ = ({ data }: { data: NonNullable<ALL_FAQS_QUERYResult> }) => {
   const [currentTab, setCurrentTab] = useState<string>(
     'general-information-faq',

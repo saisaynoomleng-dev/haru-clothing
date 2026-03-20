@@ -546,6 +546,24 @@ export type STORE_QUERYResult = {
   imageUrl: string | null;
   imageAlt: string | null;
 } | null;
+// Variable: ALL_AUTHORS_QUERY
+// Query: *[_type == 'author' && defined(slug.current)]{  name,  "slug": slug.current,  "imageUrl": mainImage.asset->.url,  "imageAlt": mainImage.alt }
+export type ALL_AUTHORS_QUERYResult = Array<{
+  name: string | null;
+  slug: string | null;
+  imageUrl: string | null;
+  imageAlt: string | null;
+}>;
+// Variable: AUTHOR_QUERY
+// Query: *[_type == 'author'&& slug.current == $slug][0]{  name,  "slug": slug.current,  "imageUrl": mainImage.asset->.url,  "imageAlt": mainImage.alt,  body,  socialLink}
+export type AUTHOR_QUERYResult = {
+  name: string | null;
+  slug: string | null;
+  imageUrl: string | null;
+  imageAlt: string | null;
+  body: string | null;
+  socialLink: string | null;
+} | null;
 
 // Query TypeMap
 import '@sanity/client';
@@ -558,5 +576,7 @@ declare module '@sanity/client' {
     '*[_type == \'utilityPage\'\n && slug.current == $slug][0]{\n  name,\n  "slug": slug.current,\n  body,\n  "title": seo.title,\n  "description": seo.description\n }': UTILITY_PAGE_QUERYResult;
     '{\n  "stores": *[_type == \'store\'\n             && defined(slug.current)\n             && (\n              (!defined($country)) || count($country) == 0 || country in $country\n             )\n             &&(\n              (!defined($continent)) || count($continent) == 0 || continent in $continent\n             )\n             ]\n             [$startIndex...$endIndex]\n             |order(name){\n              name,\n              "slug": slug.current,\n              city,\n              country,\n              continent,\n              "imageUrl": mainImage.asset->.url,\n              "imageAlt": mainImage.alt\n              },\n  "total": count(*[_type == \'store\'\n             && defined(slug.current)\n             && (\n              (!defined($country)) || count($country) == 0 || country in $country\n             )\n             &&(\n              (!defined($continent)) || count($continent) == 0 || continent in $continent\n             )\n             ])\n}': ALL_STORES_QUERYResult;
     '*[_type == \'store\'\n&& slug.current == $slug][0]{\n              name,\n              "slug": slug.current,\n              address1,\n              address2,\n              city,\n              zip,\n              state,\n              country,\n              lat,\n              long,\n              "imageUrl": mainImage.asset->.url,\n              "imageAlt": mainImage.alt\n}': STORE_QUERYResult;
+    '*[_type == \'author\'\n && defined(slug.current)]{\n  name,\n  "slug": slug.current,\n  "imageUrl": mainImage.asset->.url,\n  "imageAlt": mainImage.alt\n }': ALL_AUTHORS_QUERYResult;
+    '*[_type == \'author\'\n&& slug.current == $slug][0]{\n  name,\n  "slug": slug.current,\n  "imageUrl": mainImage.asset->.url,\n  "imageAlt": mainImage.alt,\n  body,\n  socialLink\n}': AUTHOR_QUERYResult;
   }
 }
