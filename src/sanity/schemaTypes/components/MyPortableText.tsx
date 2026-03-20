@@ -13,6 +13,7 @@ export const MyPortableText: PortableTextComponents = {
           width={600}
           height={400}
           loading="lazy"
+          className="mx-auto w-50"
         />
       ) : null,
   },
