@@ -33,7 +33,10 @@ export const ALL_BLOGS_QUERY = defineQuery(`{
               "author": author->.name,
             },
   "total": count(*[_type == 'blog'
-            && defined(slug.current)])
+            && defined(slug.current)
+            && (
+              (!defined($category)) || count($category) == 0 || category->slug.current in $category
+            )])
 }`);
 
 export const ALL_BLOG_CATEGORIES_QUERY = defineQuery(`*[_type == 'blogCategory'
@@ -172,3 +175,42 @@ export const AUTHOR_QUERY = defineQuery(`{
               "author": author->.name,
             }
 }`);
+
+// search
+export const SEARCH_PRODUCTS_QUERY = defineQuery(`*[
+  _type == 'product'
+  && defined(slug.current)
+  && (
+    (!defined($search))
+    || name match ($search + "*")
+    || variants[].color->name match ($search + "*")
+    || variants[].size->name match ($search + "*")
+  )
+]{
+  name,
+  "slug": slug.current,
+  "category": category->name,
+  basePrice,
+  "imageUrl": mainImages[0].asset->url,
+  "imageAlt": mainImages[0].alt
+}`);
+
+export const SEARCH_BLOGS_QUERY = defineQuery(`*[
+  _type == 'blog'
+  && defined(slug.current)
+  && (
+    (!defined($search))
+    || name match ($search + "*")
+    || category->name match ($search + "*")
+    || author->name match ($search + "*")
+  )
+]{
+  name,
+  "slug": slug.current,
+  publishedAt,
+  "imageUrl": mainImage.asset->.url,
+  "imageAlt": mainImage.alt,
+  "category": category->.name,
+  "author": author->.name,
+}`);
++'*';

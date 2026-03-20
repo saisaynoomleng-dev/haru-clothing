@@ -10,10 +10,7 @@ const ProductCard = ({ className, ...props }: ProductCardProps) => {
   return (
     <Link
       href={`/shop/${slug}`}
-      className={clsx(
-        'border border-red-400 flex flex-col gap-y-3 w-80 h-80',
-        className,
-      )}
+      className={clsx('flex flex-col gap-y-3', className)}
     >
       <div className="overflow-hidden">
         {imageUrl && imageAlt ? (
