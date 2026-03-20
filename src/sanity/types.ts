@@ -555,15 +555,26 @@ export type ALL_AUTHORS_QUERYResult = Array<{
   imageAlt: string | null;
 }>;
 // Variable: AUTHOR_QUERY
-// Query: *[_type == 'author'&& slug.current == $slug][0]{  name,  "slug": slug.current,  "imageUrl": mainImage.asset->.url,  "imageAlt": mainImage.alt,  body,  socialLink}
+// Query: {  "author": *[_type == 'author'              && slug.current == $slug][0]{              name,              "slug": slug.current,              body,              socialLink,              "imageUrl": mainImage.asset->.url,              "imageAlt": mainImage.alt             },  "blogs": *[_type == 'blog'            && author->slug.current == $slug]{              name,              "slug": slug.current,              publishedAt,              "imageUrl": mainImage.asset->.url,              "imageAlt": mainImage.alt,              "category": category->.name,              "author": author->.name,            }}
 export type AUTHOR_QUERYResult = {
-  name: string | null;
-  slug: string | null;
-  imageUrl: string | null;
-  imageAlt: string | null;
-  body: string | null;
-  socialLink: string | null;
-} | null;
+  author: {
+    name: string | null;
+    slug: string | null;
+    body: string | null;
+    socialLink: string | null;
+    imageUrl: string | null;
+    imageAlt: string | null;
+  } | null;
+  blogs: Array<{
+    name: string | null;
+    slug: string | null;
+    publishedAt: string | null;
+    imageUrl: string | null;
+    imageAlt: string | null;
+    category: string | null;
+    author: string | null;
+  }>;
+};
 
 // Query TypeMap
 import '@sanity/client';
@@ -577,6 +588,6 @@ declare module '@sanity/client' {
     '{\n  "stores": *[_type == \'store\'\n             && defined(slug.current)\n             && (\n              (!defined($country)) || count($country) == 0 || country in $country\n             )\n             &&(\n              (!defined($continent)) || count($continent) == 0 || continent in $continent\n             )\n             ]\n             [$startIndex...$endIndex]\n             |order(name){\n              name,\n              "slug": slug.current,\n              city,\n              country,\n              continent,\n              "imageUrl": mainImage.asset->.url,\n              "imageAlt": mainImage.alt\n              },\n  "total": count(*[_type == \'store\'\n             && defined(slug.current)\n             && (\n              (!defined($country)) || count($country) == 0 || country in $country\n             )\n             &&(\n              (!defined($continent)) || count($continent) == 0 || continent in $continent\n             )\n             ])\n}': ALL_STORES_QUERYResult;
     '*[_type == \'store\'\n&& slug.current == $slug][0]{\n              name,\n              "slug": slug.current,\n              address1,\n              address2,\n              city,\n              zip,\n              state,\n              country,\n              lat,\n              long,\n              "imageUrl": mainImage.asset->.url,\n              "imageAlt": mainImage.alt\n}': STORE_QUERYResult;
     '*[_type == \'author\'\n && defined(slug.current)]{\n  name,\n  "slug": slug.current,\n  "imageUrl": mainImage.asset->.url,\n  "imageAlt": mainImage.alt\n }': ALL_AUTHORS_QUERYResult;
-    '*[_type == \'author\'\n&& slug.current == $slug][0]{\n  name,\n  "slug": slug.current,\n  "imageUrl": mainImage.asset->.url,\n  "imageAlt": mainImage.alt,\n  body,\n  socialLink\n}': AUTHOR_QUERYResult;
+    '{\n  "author": *[_type == \'author\'\n              && slug.current == $slug][0]{\n              name,\n              "slug": slug.current,\n              body,\n              socialLink,\n              "imageUrl": mainImage.asset->.url,\n              "imageAlt": mainImage.alt\n             },\n  "blogs": *[_type == \'blog\'\n            && author->slug.current == $slug]{\n              name,\n              "slug": slug.current,\n              publishedAt,\n              "imageUrl": mainImage.asset->.url,\n              "imageAlt": mainImage.alt,\n              "category": category->.name,\n              "author": author->.name,\n            }\n}': AUTHOR_QUERYResult;
   }
 }
