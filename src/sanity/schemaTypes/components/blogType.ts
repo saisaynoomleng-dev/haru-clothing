@@ -73,7 +73,7 @@ export const blogType = defineType({
       publishedAt: 'publishedAt',
       image: 'mainImage',
     },
-    prepare({ name, minRead, category, author, publishedAt, image }) {
+    prepare({ name, category, author, publishedAt, image }) {
       const nameFormatted = name ? formatTitle(name) : 'Title not provided';
       const categoryFormatted = category
         ? formatTitle(category)

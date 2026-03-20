@@ -471,7 +471,7 @@ export type ALL_PRODUCTS_QUERYResult = {
   total: number;
 };
 // Variable: ALL_BLOGS_QUERY
-// Query: {  "blogs": *[_type == 'blog'            && defined(slug.current)            && (              (!defined($category)) || count($category) == 0 || category->slug.current in $category            )]            [$startIndex...$endIndex]            | order(publishedAt){              name,              "slug": slug.current,              publishedAt,              "imageUrl": mainImage.asset->.url,              "imageAlt": mainImage.alt,              "category": category->.name,              "author": author->.name,            },  "total": count(*[_type == 'blog'            && defined(slug.current)])}
+// Query: {  "blogs": *[_type == 'blog'            && defined(slug.current)            && (              (!defined($category)) || count($category) == 0 || category->slug.current in $category            )]            [$startIndex...$endIndex]            | order(publishedAt){              name,              "slug": slug.current,              publishedAt,              "imageUrl": mainImage.asset->.url,              "imageAlt": mainImage.alt,              "category": category->.name,              "author": author->.name,            },  "total": count(*[_type == 'blog'            && defined(slug.current)            && (              (!defined($category)) || count($category) == 0 || category->slug.current in $category            )])}
 export type ALL_BLOGS_QUERYResult = {
   blogs: Array<{
     name: string | null;
@@ -597,13 +597,34 @@ export type AUTHOR_QUERYResult = {
     author: string | null;
   }>;
 };
+// Variable: SEARCH_PRODUCTS_QUERY
+// Query: *[  _type == 'product'  && defined(slug.current)  && (    (!defined($search))    || name match ($search + "*")    || variants[].color->name match ($search + "*")    || variants[].size->name match ($search + "*")  )]{  name,  "slug": slug.current,  "category": category->name,  basePrice,  "imageUrl": mainImages[0].asset->url,  "imageAlt": mainImages[0].alt}
+export type SEARCH_PRODUCTS_QUERYResult = Array<{
+  name: string | null;
+  slug: string | null;
+  category: string | null;
+  basePrice: number | null;
+  imageUrl: string | null;
+  imageAlt: string | null;
+}>;
+// Variable: SEARCH_BLOGS_QUERY
+// Query: *[  _type == 'blog'  && defined(slug.current)  && (    (!defined($search))    || name match ($search + "*")    || category->name match ($search + "*")    || author->name match ($search + "*")  )]{  name,  "slug": slug.current,  publishedAt,  "imageUrl": mainImage.asset->.url,  "imageAlt": mainImage.alt,  "category": category->.name,  "author": author->.name,}
+export type SEARCH_BLOGS_QUERYResult = Array<{
+  name: string | null;
+  slug: string | null;
+  publishedAt: string | null;
+  imageUrl: string | null;
+  imageAlt: string | null;
+  category: string | null;
+  author: string | null;
+}>;
 
 // Query TypeMap
 import '@sanity/client';
 declare module '@sanity/client' {
   interface SanityQueries {
     '{\n  "products": *[_type == \'product\'\n               && defined(slug.current)]{\n                  name,\n                  "slug": slug.current,\n                  "category": category->.name,\n                  basePrice,\n                  "imageUrl": mainImages[0].asset->.url,\n                  "imageAlt": mainImages[0].alt\n               },\n  "total": count(*[_type == \'product\'\n               && defined(slug.current)])\n}': ALL_PRODUCTS_QUERYResult;
-    '{\n  "blogs": *[_type == \'blog\'\n            && defined(slug.current)\n            && (\n              (!defined($category)) || count($category) == 0 || category->slug.current in $category\n            )]\n            [$startIndex...$endIndex]\n            | order(publishedAt){\n              name,\n              "slug": slug.current,\n              publishedAt,\n              "imageUrl": mainImage.asset->.url,\n              "imageAlt": mainImage.alt,\n              "category": category->.name,\n              "author": author->.name,\n            },\n  "total": count(*[_type == \'blog\'\n            && defined(slug.current)])\n}': ALL_BLOGS_QUERYResult;
+    '{\n  "blogs": *[_type == \'blog\'\n            && defined(slug.current)\n            && (\n              (!defined($category)) || count($category) == 0 || category->slug.current in $category\n            )]\n            [$startIndex...$endIndex]\n            | order(publishedAt){\n              name,\n              "slug": slug.current,\n              publishedAt,\n              "imageUrl": mainImage.asset->.url,\n              "imageAlt": mainImage.alt,\n              "category": category->.name,\n              "author": author->.name,\n            },\n  "total": count(*[_type == \'blog\'\n            && defined(slug.current)\n            && (\n              (!defined($category)) || count($category) == 0 || category->slug.current in $category\n            )])\n}': ALL_BLOGS_QUERYResult;
     '*[_type == \'blogCategory\'\n && defined(slug.current)]{\n  name,\n  "slug": slug.current\n }': ALL_BLOG_CATEGORIES_QUERYResult;
     '*[_type == \'blog\'\n && slug.current == $slug][0]{\n  name,\n  "slug": slug.current,\n  publishedAt,\n  minRead,\n  "category": category->name,\n  author->{\n    name,\n    "slug": slug.current\n  },\n  body,\n  "imageUrl": mainImage.asset->.url,\n  "imageAlt": mainImage.alt\n }': BLOG_QUERYResult;
     '*[_type == \'faq\'\n && defined(slug.current)]{\n  name,\n  "slug": slug.current,\n  faqs[]{\n    question,\n    answer,\n    _key\n  }\n }': ALL_FAQS_QUERYResult;
@@ -613,5 +634,7 @@ declare module '@sanity/client' {
     '*[_type == \'store\'\n&& slug.current == $slug][0]{\n              name,\n              "slug": slug.current,\n              address1,\n              address2,\n              city,\n              zip,\n              state,\n              country,\n              lat,\n              long,\n              "imageUrl": mainImage.asset->.url,\n              "imageAlt": mainImage.alt\n}': STORE_QUERYResult;
     '*[_type == \'author\'\n && defined(slug.current)]{\n  name,\n  "slug": slug.current,\n  "imageUrl": mainImage.asset->.url,\n  "imageAlt": mainImage.alt\n }': ALL_AUTHORS_QUERYResult;
     '{\n  "author": *[_type == \'author\'\n              && slug.current == $slug][0]{\n              name,\n              "slug": slug.current,\n              body,\n              socialLink,\n              "imageUrl": mainImage.asset->.url,\n              "imageAlt": mainImage.alt\n             },\n  "blogs": *[_type == \'blog\'\n            && author->slug.current == $slug]{\n              name,\n              "slug": slug.current,\n              publishedAt,\n              "imageUrl": mainImage.asset->.url,\n              "imageAlt": mainImage.alt,\n              "category": category->.name,\n              "author": author->.name,\n            }\n}': AUTHOR_QUERYResult;
+    '*[\n  _type == \'product\'\n  && defined(slug.current)\n  && (\n    (!defined($search))\n    || name match ($search + "*")\n    || variants[].color->name match ($search + "*")\n    || variants[].size->name match ($search + "*")\n  )\n]{\n  name,\n  "slug": slug.current,\n  "category": category->name,\n  basePrice,\n  "imageUrl": mainImages[0].asset->url,\n  "imageAlt": mainImages[0].alt\n}': SEARCH_PRODUCTS_QUERYResult;
+    '*[\n  _type == \'blog\'\n  && defined(slug.current)\n  && (\n    (!defined($search))\n    || name match ($search + "*")\n    || category->name match ($search + "*")\n    || author->name match ($search + "*")\n  )\n]{\n  name,\n  "slug": slug.current,\n  publishedAt,\n  "imageUrl": mainImage.asset->.url,\n  "imageAlt": mainImage.alt,\n  "category": category->.name,\n  "author": author->.name,\n}': SEARCH_BLOGS_QUERYResult;
   }
 }

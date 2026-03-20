@@ -23,7 +23,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={cn('font-sans', geist.variable)}>
+    <html
+      lang="en"
+      className={cn('font-sans', geist.variable)}
+      data-scroll-behavior="smooth"
+    >
       <body
         className={`${nunito.variable} ${playfair.variable} ${caveat.variable} antialiased`}
       >
