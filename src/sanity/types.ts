@@ -458,7 +458,7 @@ export type AllSanitySchemaTypes =
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/sanity/lib/queries.ts
 // Variable: ALL_PRODUCTS_QUERY
-// Query: {  "products": *[_type == 'product'               && defined(slug.current)]{                  name,                  "slug": slug.current,                  "category": category->.name,                  basePrice,                  "imageUrl": mainImages[0].asset->.url,                  "imageAlt": mainImages[0].alt               },  "total": count(*[_type == 'product'               && defined(slug.current)])}
+// Query: {  "products": *[_type == 'product'               && defined(slug.current)]               [$startIndex...$endIndex]{                  name,                  "slug": slug.current,                  "category": category->.name,                  basePrice,                  "imageUrl": mainImages[0].asset->.url,                  "imageAlt": mainImages[0].alt               },  "total": count(*[_type == 'product'               && defined(slug.current)])}
 export type ALL_PRODUCTS_QUERYResult = {
   products: Array<{
     name: string | null;
@@ -623,7 +623,7 @@ export type SEARCH_BLOGS_QUERYResult = Array<{
 import '@sanity/client';
 declare module '@sanity/client' {
   interface SanityQueries {
-    '{\n  "products": *[_type == \'product\'\n               && defined(slug.current)]{\n                  name,\n                  "slug": slug.current,\n                  "category": category->.name,\n                  basePrice,\n                  "imageUrl": mainImages[0].asset->.url,\n                  "imageAlt": mainImages[0].alt\n               },\n  "total": count(*[_type == \'product\'\n               && defined(slug.current)])\n}': ALL_PRODUCTS_QUERYResult;
+    '{\n  "products": *[_type == \'product\'\n               && defined(slug.current)]\n               [$startIndex...$endIndex]{\n                  name,\n                  "slug": slug.current,\n                  "category": category->.name,\n                  basePrice,\n                  "imageUrl": mainImages[0].asset->.url,\n                  "imageAlt": mainImages[0].alt\n               },\n  "total": count(*[_type == \'product\'\n               && defined(slug.current)])\n}': ALL_PRODUCTS_QUERYResult;
     '{\n  "blogs": *[_type == \'blog\'\n            && defined(slug.current)\n            && (\n              (!defined($category)) || count($category) == 0 || category->slug.current in $category\n            )]\n            [$startIndex...$endIndex]\n            | order(publishedAt){\n              name,\n              "slug": slug.current,\n              publishedAt,\n              "imageUrl": mainImage.asset->.url,\n              "imageAlt": mainImage.alt,\n              "category": category->.name,\n              "author": author->.name,\n            },\n  "total": count(*[_type == \'blog\'\n            && defined(slug.current)\n            && (\n              (!defined($category)) || count($category) == 0 || category->slug.current in $category\n            )])\n}': ALL_BLOGS_QUERYResult;
     '*[_type == \'blogCategory\'\n && defined(slug.current)]{\n  name,\n  "slug": slug.current\n }': ALL_BLOG_CATEGORIES_QUERYResult;
     '*[_type == \'blog\'\n && slug.current == $slug][0]{\n  name,\n  "slug": slug.current,\n  publishedAt,\n  minRead,\n  "category": category->name,\n  author->{\n    name,\n    "slug": slug.current\n  },\n  body,\n  "imageUrl": mainImage.asset->.url,\n  "imageAlt": mainImage.alt\n }': BLOG_QUERYResult;

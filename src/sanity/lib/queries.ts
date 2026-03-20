@@ -3,7 +3,8 @@ import { defineQuery } from 'next-sanity';
 // query all products
 export const ALL_PRODUCTS_QUERY = defineQuery(`{
   "products": *[_type == 'product'
-               && defined(slug.current)]{
+               && defined(slug.current)]
+               [$startIndex...$endIndex]{
                   name,
                   "slug": slug.current,
                   "category": category->.name,

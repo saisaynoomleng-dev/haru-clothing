@@ -45,7 +45,7 @@ const SearchPage = async ({
         <div className="flex flex-col gap-y-3">
           <h2 className="font-semibold">Products</h2>
 
-          <div className="grid grid-cols-3 gap-3">
+          <div className="flex gap-x-4 overflow-x-auto">
             {products.map((p) => (
               <Suspense fallback={<ProductCardSkeleton />} key={p.slug}>
                 <ProductCard {...p} />
