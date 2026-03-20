@@ -5,7 +5,6 @@ import { sanityProductWebhookPayload } from '@/lib/validations';
 import db from '@/db';
 import { ProductTable, ProductVariantTable } from '@/db/schema';
 import { eq, sql } from 'drizzle-orm';
-import { revalidateTag } from 'next/cache';
 
 export async function POST(req: NextRequest) {
   try {
@@ -26,6 +25,7 @@ export async function POST(req: NextRequest) {
     const result = sanityProductWebhookPayload.safeParse(body);
 
     if (!result.success) {
+      console.log(JSON.stringify(result.error.issues));
       return NextResponse.json(
         { message: 'Invalid Paybload Body' },
         { status: 422 },
@@ -59,69 +59,67 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    await db.transaction(async (tx) => {
-      const [insertedProduct] = await tx
-        .insert(ProductTable)
-        .values({
-          sanityId: _id,
-          sanitySlug: slug,
-          sku,
+    const [insertedProduct] = await db
+      .insert(ProductTable)
+      .values({
+        sanityId: _id,
+        sanitySlug: slug,
+        sku,
+        brand,
+        name,
+        basePriceInCents: Math.round(basePrice * 100),
+        imageUrl,
+        numberInStock: stock,
+        status,
+      })
+      .onConflictDoUpdate({
+        target: ProductTable.sanityId,
+        set: {
           brand,
           name,
           basePriceInCents: Math.round(basePrice * 100),
           imageUrl,
           numberInStock: stock,
           status,
-        })
+          updatedAt: new Date(),
+        },
+      })
+      .returning({ id: ProductTable.id });
+
+    const dbProductId = insertedProduct.id;
+
+    if (variants?.length) {
+      const variantValues = variants.map((v) => ({
+        originalProductId: dbProductId,
+        sku: v.sku,
+        basePriceInCents: v.priceOverride
+          ? Math.round(v.priceOverride * 100)
+          : Math.round(basePrice * 100),
+        imageUrl: v.imageUrl,
+        numberInStock: v.stock,
+        color: v.color,
+        fit: v.fit ? v.fit : null,
+        size: v.size ? v.size : null,
+      }));
+
+      await db
+        .insert(ProductVariantTable)
+        .values(variantValues)
         .onConflictDoUpdate({
-          target: ProductTable.sanityId,
+          target: ProductVariantTable.sku,
           set: {
-            brand,
-            name,
-            basePriceInCents: Math.round(basePrice * 100),
-            imageUrl,
-            numberInStock: stock,
-            status,
+            basePriceInCents: sql`excluded.base_price_in_cents`,
+            numberInStock: sql`excluded.number_in_stock`,
+            imageUrl: sql`excluded.image_url`,
             updatedAt: new Date(),
           },
-        })
-        .returning({ id: ProductTable.id });
+        });
 
-      const dbProductId = insertedProduct.id;
-
-      if (variants?.length) {
-        const variantValues = variants.map((v) => ({
-          originalProductId: dbProductId,
-          sku: v.sku,
-          basePriceInCents: v.priceOverride
-            ? Math.round(v.priceOverride * 100)
-            : Math.round(basePrice * 100),
-          imageUrl: v.imageUrl,
-          numberInStock: v.stock,
-          color: v.color,
-          fit: v.fit ? v.fit : null,
-          size: v.size ? v.size : null,
-        }));
-
-        await tx
-          .insert(ProductVariantTable)
-          .values(variantValues)
-          .onConflictDoUpdate({
-            target: ProductVariantTable.sku,
-            set: {
-              basePriceInCents: sql`excluded.base_price_in_cents`,
-              numberInStock: sql`excluded.number_in_stock`,
-              imageUrl: sql`excluded.image_url`,
-              updatedAt: new Date(),
-            },
-          });
-
-        return NextResponse.json(
-          { message: 'Product Added Successfully' },
-          { status: 200 },
-        );
-      }
-    });
+      return NextResponse.json(
+        { message: 'Product Added Successfully' },
+        { status: 200 },
+      );
+    }
 
     return NextResponse.json(
       { message: 'Product Added Successfully' },

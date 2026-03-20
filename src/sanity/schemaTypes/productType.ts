@@ -157,6 +157,7 @@ export const productType = defineType({
         ],
         layout: 'radio',
       },
+      validation: (rule) => rule.required(),
     }),
   ],
   preview: {
