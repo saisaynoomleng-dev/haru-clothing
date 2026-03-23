@@ -241,3 +241,28 @@ export const SEARCH_BLOGS_QUERY = defineQuery(`*[
   "author": author->.name,
 }`);
 +'*';
+
+// career
+export const ALL_CAREERS_QUERY = defineQuery(`{
+  "careers": *[_type == 'career'
+ && defined(slug.current)]
+ [$startIndex...$endIndex]{
+  name,
+  "slug": slug.current,
+  department
+ },
+  "total": count(*[_type == 'career'
+ && defined(slug.current)]{
+  name,
+  "slug": slug.current,
+  department
+ })
+}`);
+
+export const CAREER_QUERY = defineQuery(`*[_type == 'career'
+ && slug.current == $slug][0]{
+  name,
+  "slug": slug.current,
+  department,
+  body
+ }`);

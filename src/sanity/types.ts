@@ -637,6 +637,44 @@ export type SEARCH_BLOGS_QUERYResult = Array<{
   category: string | null;
   author: string | null;
 }>;
+// Variable: ALL_CAREERS_QUERY
+// Query: {  "careers": *[_type == 'career' && defined(slug.current)] [$startIndex...$endIndex]{  name,  "slug": slug.current,  department },  "total": count(*[_type == 'career' && defined(slug.current)]{  name,  "slug": slug.current,  department })}
+export type ALL_CAREERS_QUERYResult = {
+  careers: Array<{
+    name: string | null;
+    slug: string | null;
+    department:
+      | 'design'
+      | 'engineer'
+      | 'growth-&-marketing'
+      | 'marchandising'
+      | 'marketing'
+      | 'operations'
+      | 'people'
+      | 'sales'
+      | 'support'
+      | null;
+  }>;
+  total: number;
+};
+// Variable: CAREER_QUERY
+// Query: *[_type == 'career' && slug.current == $slug][0]{  name,  "slug": slug.current,  department,  body }
+export type CAREER_QUERYResult = {
+  name: string | null;
+  slug: string | null;
+  department:
+    | 'design'
+    | 'engineer'
+    | 'growth-&-marketing'
+    | 'marchandising'
+    | 'marketing'
+    | 'operations'
+    | 'people'
+    | 'sales'
+    | 'support'
+    | null;
+  body: BlockContent | null;
+} | null;
 
 // Query TypeMap
 import '@sanity/client';
@@ -656,5 +694,7 @@ declare module '@sanity/client' {
     '{\n  "author": *[_type == \'author\'\n              && slug.current == $slug][0]{\n              name,\n              "slug": slug.current,\n              body,\n              socialLink,\n              "imageUrl": mainImage.asset->.url,\n              "imageAlt": mainImage.alt\n             },\n  "blogs": *[_type == \'blog\'\n            && author->slug.current == $slug]{\n              name,\n              "slug": slug.current,\n              publishedAt,\n              "imageUrl": mainImage.asset->.url,\n              "imageAlt": mainImage.alt,\n              "category": category->.name,\n              "author": author->.name,\n            }\n}': AUTHOR_QUERYResult;
     '*[\n  _type == \'product\'\n  && defined(slug.current)\n  && (\n    (!defined($search))\n    || name match ($search + "*")\n    || variants[].color->name match ($search + "*")\n    || variants[].size->name match ($search + "*")\n  )\n]{\n  name,\n  "slug": slug.current,\n  "category": category->name,\n  basePrice,\n  "imageUrl": mainImages[0].asset->url,\n  "imageAlt": mainImages[0].alt\n}': SEARCH_PRODUCTS_QUERYResult;
     '*[\n  _type == \'blog\'\n  && defined(slug.current)\n  && (\n    (!defined($search))\n    || name match ($search + "*")\n    || category->name match ($search + "*")\n    || author->name match ($search + "*")\n  )\n]{\n  name,\n  "slug": slug.current,\n  publishedAt,\n  "imageUrl": mainImage.asset->.url,\n  "imageAlt": mainImage.alt,\n  "category": category->.name,\n  "author": author->.name,\n}': SEARCH_BLOGS_QUERYResult;
+    '{\n  "careers": *[_type == \'career\'\n && defined(slug.current)]\n [$startIndex...$endIndex]{\n  name,\n  "slug": slug.current,\n  department\n },\n  "total": count(*[_type == \'career\'\n && defined(slug.current)]{\n  name,\n  "slug": slug.current,\n  department\n })\n}': ALL_CAREERS_QUERYResult;
+    '*[_type == \'career\'\n && slug.current == $slug][0]{\n  name,\n  "slug": slug.current,\n  department,\n  body\n }': CAREER_QUERYResult;
   }
 }
