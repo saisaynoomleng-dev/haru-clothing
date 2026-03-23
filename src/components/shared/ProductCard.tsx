@@ -17,7 +17,7 @@ const ProductCard = ({ className, ...props }: ProductCardProps) => {
           <MySanityImage
             src={imageUrl}
             alt={imageAlt || ''}
-            className="hover:scale-[1.02] w-full"
+            className="hover:scale-[1.02] min-w-full"
           />
         ) : null}
       </div>

@@ -1395,13 +1395,6 @@
         },
         "optional": true
       },
-      "stock": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "number"
-        },
-        "optional": true
-      },
       "tag": {
         "type": "objectAttribute",
         "value": {
@@ -1441,28 +1434,6 @@
                   }
                 }
               }
-            }
-          }
-        },
-        "optional": true
-      },
-      "mainImages": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "array",
-          "of": {
-            "type": "object",
-            "attributes": {
-              "_key": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "string"
-                }
-              }
-            },
-            "rest": {
-              "type": "inline",
-              "name": "blockImage"
             }
           }
         },

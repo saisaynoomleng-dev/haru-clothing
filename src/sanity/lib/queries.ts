@@ -4,17 +4,43 @@ import { defineQuery } from 'next-sanity';
 export const ALL_PRODUCTS_QUERY = defineQuery(`{
   "products": *[_type == 'product'
                && defined(slug.current)]
-               [$startIndex...$endIndex]{
+               [$startIndex...$endIndex]
+               |order(_createdAt){
                   name,
                   "slug": slug.current,
                   "category": category->.name,
                   basePrice,
-                  "imageUrl": mainImages[0].asset->.url,
-                  "imageAlt": mainImages[0].alt
+                  "imageUrl": variants[0].mainImages[0].asset->.url,
+                  "imageAlt": variants[0].mainImages[0].alt
                },
   "total": count(*[_type == 'product'
                && defined(slug.current)])
 }`);
+
+export const PRODUCT_QUERY = defineQuery(`*[_type == 'product'
+ && slug.current == $slug][0]{
+  name,
+  sku,
+  "slug": slug.current,
+  basePrice,
+  "category": category->name,
+  "brand": brand->name,
+  "variants": variants[]{
+    sku,
+    "color": color->name,
+    "size": size->size,
+    stock,
+    priceOverride,
+    fit,
+    "images": mainImages[]{
+      "imageUrl": asset->url,
+      "imageAlt": alt
+    }
+  },
+  "tag": tag[0]->name,
+  status,
+  body
+ }`);
 
 // query all blogs
 export const ALL_BLOGS_QUERY = defineQuery(`{
