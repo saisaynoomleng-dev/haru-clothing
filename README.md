@@ -30,6 +30,7 @@
 - 3/18/2026 => development
 - 3/19/2026 => development
 - 3/20/2026 => development
+- 3/23/2026 => development
 
 ---
 
@@ -39,3 +40,4 @@
 - Users can find the nearest stores using filters
 - Users can subscribe to newsletter with email and get instant email back
 - Users can contact the page with name, email, phone and get instant email back
+- Users can see variant products under one product and order different thing
