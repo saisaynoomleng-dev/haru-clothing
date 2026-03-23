@@ -58,6 +58,7 @@ export const productType = defineType({
       name: 'variants',
       title: 'Product Variants',
       type: 'array',
+      validation: (rule) => rule.required(),
       of: [
         {
           type: 'object',
@@ -121,23 +122,10 @@ export const productType = defineType({
       ],
     }),
     defineField({
-      name: 'stock',
-      title: 'Stock Quantity',
-      type: 'number',
-      validation: (rule) => rule.required(),
-    }),
-    defineField({
       name: 'tag',
       title: 'Product Tags',
       type: 'array',
       of: [{ type: 'reference', to: [{ type: 'productTag' }] }],
-      validation: (rule) => rule.required(),
-    }),
-    defineField({
-      name: 'mainImages',
-      title: 'Product Images',
-      type: 'array',
-      of: [{ type: 'blockImage' }],
       validation: (rule) => rule.required(),
     }),
     defineField({
@@ -164,7 +152,7 @@ export const productType = defineType({
     select: {
       name: 'name',
       price: 'basePrice',
-      image: 'mainImages.0.asset',
+      image: 'variants.0.mainImages.0.asset',
       category: 'category.name',
     },
     prepare({ name, price, image, category }) {

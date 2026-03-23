@@ -247,7 +247,6 @@ export type Product = {
     _type: 'variant';
     _key: string;
   }>;
-  stock?: number;
   tag?: Array<{
     _ref: string;
     _type: 'reference';
@@ -255,11 +254,6 @@ export type Product = {
     _key: string;
     [internalGroqTypeReferenceTo]?: 'productTag';
   }>;
-  mainImages?: Array<
-    {
-      _key: string;
-    } & BlockImage
-  >;
   body?: BlockContent;
   status?: 'draft' | 'published';
 };
@@ -458,7 +452,7 @@ export type AllSanitySchemaTypes =
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/sanity/lib/queries.ts
 // Variable: ALL_PRODUCTS_QUERY
-// Query: {  "products": *[_type == 'product'               && defined(slug.current)]               [$startIndex...$endIndex]{                  name,                  "slug": slug.current,                  "category": category->.name,                  basePrice,                  "imageUrl": mainImages[0].asset->.url,                  "imageAlt": mainImages[0].alt               },  "total": count(*[_type == 'product'               && defined(slug.current)])}
+// Query: {  "products": *[_type == 'product'               && defined(slug.current)]               [$startIndex...$endIndex]               |order(_createdAt){                  name,                  "slug": slug.current,                  "category": category->.name,                  basePrice,                  "imageUrl": variants[0].mainImages[0].asset->.url,                  "imageAlt": variants[0].mainImages[0].alt               },  "total": count(*[_type == 'product'               && defined(slug.current)])}
 export type ALL_PRODUCTS_QUERYResult = {
   products: Array<{
     name: string | null;
@@ -470,6 +464,31 @@ export type ALL_PRODUCTS_QUERYResult = {
   }>;
   total: number;
 };
+// Variable: PRODUCT_QUERY
+// Query: *[_type == 'product' && slug.current == $slug][0]{  name,  sku,  "slug": slug.current,  basePrice,  "category": category->name,  "brand": brand->name,  "variants": variants[]{    sku,    "color": color->name,    "size": size->size,    stock,    priceOverride,    fit,    "images": mainImages[]{      "imageUrl": asset->url,      "imageAlt": alt    }  },  "tag": tag[0]->name,  status,  body }
+export type PRODUCT_QUERYResult = {
+  name: string | null;
+  sku: string | null;
+  slug: string | null;
+  basePrice: number | null;
+  category: string | null;
+  brand: string | null;
+  variants: Array<{
+    sku: string | null;
+    color: string | null;
+    size: null;
+    stock: number | null;
+    priceOverride: number | null;
+    fit: 'oversized' | 'petite' | 'slim-fit' | 'tall' | null;
+    images: Array<{
+      imageUrl: string | null;
+      imageAlt: string | null;
+    }> | null;
+  }> | null;
+  tag: string | null;
+  status: 'draft' | 'published' | null;
+  body: BlockContent | null;
+} | null;
 // Variable: ALL_BLOGS_QUERY
 // Query: {  "blogs": *[_type == 'blog'            && defined(slug.current)            && (              (!defined($category)) || count($category) == 0 || category->slug.current in $category            )]            [$startIndex...$endIndex]            | order(publishedAt){              name,              "slug": slug.current,              publishedAt,              "imageUrl": mainImage.asset->.url,              "imageAlt": mainImage.alt,              "category": category->.name,              "author": author->.name,            },  "total": count(*[_type == 'blog'            && defined(slug.current)            && (              (!defined($category)) || count($category) == 0 || category->slug.current in $category            )])}
 export type ALL_BLOGS_QUERYResult = {
@@ -604,8 +623,8 @@ export type SEARCH_PRODUCTS_QUERYResult = Array<{
   slug: string | null;
   category: string | null;
   basePrice: number | null;
-  imageUrl: string | null;
-  imageAlt: string | null;
+  imageUrl: null;
+  imageAlt: null;
 }>;
 // Variable: SEARCH_BLOGS_QUERY
 // Query: *[  _type == 'blog'  && defined(slug.current)  && (    (!defined($search))    || name match ($search + "*")    || category->name match ($search + "*")    || author->name match ($search + "*")  )]{  name,  "slug": slug.current,  publishedAt,  "imageUrl": mainImage.asset->.url,  "imageAlt": mainImage.alt,  "category": category->.name,  "author": author->.name,}
@@ -623,7 +642,8 @@ export type SEARCH_BLOGS_QUERYResult = Array<{
 import '@sanity/client';
 declare module '@sanity/client' {
   interface SanityQueries {
-    '{\n  "products": *[_type == \'product\'\n               && defined(slug.current)]\n               [$startIndex...$endIndex]{\n                  name,\n                  "slug": slug.current,\n                  "category": category->.name,\n                  basePrice,\n                  "imageUrl": mainImages[0].asset->.url,\n                  "imageAlt": mainImages[0].alt\n               },\n  "total": count(*[_type == \'product\'\n               && defined(slug.current)])\n}': ALL_PRODUCTS_QUERYResult;
+    '{\n  "products": *[_type == \'product\'\n               && defined(slug.current)]\n               [$startIndex...$endIndex]\n               |order(_createdAt){\n                  name,\n                  "slug": slug.current,\n                  "category": category->.name,\n                  basePrice,\n                  "imageUrl": variants[0].mainImages[0].asset->.url,\n                  "imageAlt": variants[0].mainImages[0].alt\n               },\n  "total": count(*[_type == \'product\'\n               && defined(slug.current)])\n}': ALL_PRODUCTS_QUERYResult;
+    '*[_type == \'product\'\n && slug.current == $slug][0]{\n  name,\n  sku,\n  "slug": slug.current,\n  basePrice,\n  "category": category->name,\n  "brand": brand->name,\n  "variants": variants[]{\n    sku,\n    "color": color->name,\n    "size": size->size,\n    stock,\n    priceOverride,\n    fit,\n    "images": mainImages[]{\n      "imageUrl": asset->url,\n      "imageAlt": alt\n    }\n  },\n  "tag": tag[0]->name,\n  status,\n  body\n }': PRODUCT_QUERYResult;
     '{\n  "blogs": *[_type == \'blog\'\n            && defined(slug.current)\n            && (\n              (!defined($category)) || count($category) == 0 || category->slug.current in $category\n            )]\n            [$startIndex...$endIndex]\n            | order(publishedAt){\n              name,\n              "slug": slug.current,\n              publishedAt,\n              "imageUrl": mainImage.asset->.url,\n              "imageAlt": mainImage.alt,\n              "category": category->.name,\n              "author": author->.name,\n            },\n  "total": count(*[_type == \'blog\'\n            && defined(slug.current)\n            && (\n              (!defined($category)) || count($category) == 0 || category->slug.current in $category\n            )])\n}': ALL_BLOGS_QUERYResult;
     '*[_type == \'blogCategory\'\n && defined(slug.current)]{\n  name,\n  "slug": slug.current\n }': ALL_BLOG_CATEGORIES_QUERYResult;
     '*[_type == \'blog\'\n && slug.current == $slug][0]{\n  name,\n  "slug": slug.current,\n  publishedAt,\n  minRead,\n  "category": category->name,\n  author->{\n    name,\n    "slug": slug.current\n  },\n  body,\n  "imageUrl": mainImage.asset->.url,\n  "imageAlt": mainImage.alt\n }': BLOG_QUERYResult;
